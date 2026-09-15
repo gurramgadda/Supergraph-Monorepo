@@ -1,6 +1,14 @@
 #!/bin/sh
 set -eu
 
+# Never trace environment loading: .env may contain APOLLO_KEY.
+set +x
+if [ -f .env ]; then
+  set -a
+  . ./.env
+  set +a
+fi
+
 PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:$HOME/.rover/bin:$PATH"
 export PATH
 

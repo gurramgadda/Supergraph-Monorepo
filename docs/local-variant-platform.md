@@ -57,6 +57,11 @@ npm run start:router
 Router reads only the fetched artifact. It does not read `supergraph.yaml`,
 compose schemas, or call GraphOS while serving requests.
 
+The publish step records the local routing URLs from `PRODUCTS_URL` and
+`TESTING_URL` in the GraphOS artifact. GraphOS does not need to reach these
+URLs for this local variant, but the local Router needs them when it executes
+subgraph requests.
+
 ## Fallback mode
 
 For offline development or diagnosing a GraphOS discrepancy:
@@ -72,6 +77,12 @@ artifact and is not the primary deployment input.
 
 Never commit `APOLLO_KEY`. Use an exported environment variable, macOS Keychain
 integration, or an untracked `.env` file based on `.env.example`.
+
+The repository scripts disable shell tracing before loading `.env`, so normal
+script output contains only non-secret values such as the graph reference,
+artifact path, and checksum. Do not run scripts with `sh -x`, and do not print
+the environment with `env`, `set`, or diagnostic tooling while `APOLLO_KEY` is
+loaded. If the key has appeared in terminal output, rotate it in GraphOS.
 
 The GraphOS API key previously present in workspace settings must be rotated
 before using the publish commands. The workspace settings now contain only the
