@@ -1,0 +1,79 @@
+{
+  "name": "supergraph-monorepo",
+  "private": true,
+  "description": "Local Apollo Federation supergraph monorepo",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apollographql/rover-init-starters.git"
+  },
+  "homepage": "https://github.com/apollographql/rover-init-starters#readme",
+  "bugs": {
+    "url": "https://github.com/apollographql/rover-init-starters/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=18.0"
+  },
+  "scripts": {
+    "build": "npm run build:local",
+    "build:product": "npm run codegen && tsc",
+    "build:testing": "graphql-codegen --config testing/codegen.ts && tsc -p testing/tsconfig.json",
+    "compose:local": "sh scripts/compose-local.sh",
+    "codegen": "graphql-codegen",
+    "build:local": "npm run codegen && npm run build:product && npm run build:testing && npm test -- --runInBand && npm run compose:local",
+    "check:graphos": "sh scripts/check-graphos.sh",
+    "fetch:graphos": "sh scripts/fetch-graphos.sh",
+    "publish:graphos": "sh scripts/publish-graphos.sh",
+    "start:router": "sh scripts/start-router.sh",
+    "deploy:local": "sh scripts/deploy-local.sh",
+    "postinstall": "npm run build",
+    "start": "node dist/index.js",
+    "start:testing": "node testing/dist/index.js",
+    "dev": "nodemon --watch \"src/**\" --ext \"ts,json,graphql\" --exec \"npm run build && npm run start\" --ignore src/__generated__ --ignore ./src/datasources/BarAPI.ts",
+    "dev:testing": "nodemon --watch \"testing/src/**\" --watch \"testing/schema.graphql\" --ext \"ts,json,graphql\" --exec \"npm run build:testing && npm run start:testing\" --ignore testing/src/__generated__",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.0.0",
+    "@apollo/subgraph": "^2.3.1",
+    "apollo-server-errors": "^3.3.1",
+    "graphql": "latest",
+    "graphql-tag": "latest"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.0",
+    "@graphql-codegen/typescript-resolvers": "^4.0.0",
+    "@types/jest": "^29.0.3",
+    "@types/node": "^22.0.0",
+    "jest": "^29.0.3",
+    "nodemon": "^3.0.0",
+    "ts-jest": "^29.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.9.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "roots": [
+      "src",
+      "testing/src"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "testRegext": "/__tests__/.*.test.ts",
+        "verbose": true
+      }
+    }
+  },
+  "allowScripts": {
+    "@apollo/protobufjs@1.2.7": true,
+    "fsevents@2.3.3": true
+  }
+}

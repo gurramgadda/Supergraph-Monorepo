@@ -1,0 +1,10 @@
+graph_ref: supergraph-federation@local
+subgraphs:
+  - name: products
+    schema: schema.graphql
+  - name: testing
+    schema: testing/schema.graphql
+policy:
+  runtime: local
+  artifact_source: graphos
+  local_composition: fallback

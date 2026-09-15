@@ -1,0 +1,12 @@
+{
+    "terminal.integrated.profiles.osx": {
+      "graphos": {
+        "path": "zsh",
+        "args": ["-l"],
+        "env": {
+          "APOLLO_GRAPH_REF": "supergraph-federation@local"
+        }
+      }
+    },
+    "terminal.integrated.defaultProfile.osx": "graphos"
+  }

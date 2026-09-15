@@ -1,0 +1,18 @@
+type TestProduct {
+  id: ID!
+  name: String!
+  description: String!
+  testStatus: String!
+  testScore: Int!
+}
+
+type Query {
+  testProduct(id: ID!): TestProduct
+  testProducts: [TestProduct!]!
+}
+
+extend type Product @key(fields: "id") {
+  id: ID! @external
+  testStatus: String!
+  testScore: Int!
+}
